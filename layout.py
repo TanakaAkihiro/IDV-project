@@ -16,9 +16,17 @@ def get_layout():
                         [
                             html.Label("Genus"),
                             dcc.Dropdown(id="genus-dropdown", options=df.columns),
-                        ]
+                        ],
+                        className="genus-dropdown",
                     ),
-                    dcc.Slider(0, 1, 0.1, value=0, id="threshold-slider"),
+                    html.Div(
+                        [
+                            html.Label("Threshold"),
+                            dcc.Slider(0, 1, 0.1, value=0, id="threshold-slider"),
+                        ],
+                        className="threshold-slider",
+                    )
+                    
                 ],
                 id="controls",
                 className="controls",
