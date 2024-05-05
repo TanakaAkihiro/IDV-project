@@ -55,7 +55,7 @@ def register_callbacks():
 
         fig.update_layout(
             margin=dict(l=0, r=0, b=0, t=0),
-            width=1800,
+            autosize=True,
             height=800,
             geo={"center": {"lat": df["LAT"].mean(), "lon": df["LONG"].mean()}},
         )
