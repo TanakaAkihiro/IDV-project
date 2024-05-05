@@ -37,7 +37,7 @@ def register_callbacks():
                 hover_name="SITE_NAME",
                 color=genus,
             )
-            .update_traces(marker={"size": 7, "symbol": "circle"})
+            .update_traces(marker=dict(size=7, symbol="circle", opacity=0.7))
             .data[0]
         )
 
@@ -50,7 +50,7 @@ def register_callbacks():
                     hover_data=["COUNTRY", "MIN_AGE", "MAX_AGE", genus],
                     hover_name="SITE_NAME",
                 )
-                .update_traces(marker=dict(size=7, symbol="cross", color="black"))
+                .update_traces(marker=dict(size=7, symbol="cross", color="black", opacity=0.7))
                 .data[0]
             )
 
