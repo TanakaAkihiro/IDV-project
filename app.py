@@ -1,11 +1,10 @@
 import pandas as pd
-import geopandas as gpd
 import dash
 from dash import html, dcc, Input, Output, callback
 from dash.exceptions import PreventUpdate
 import plotly.express as px
 import plotly.graph_objects as go
-from shapely.geometry import Point
+from utils.map import get_initial_map
 
 
 df = pd.read_csv("data/ALLEurasia_modified.csv")
@@ -19,12 +18,23 @@ server = app.server
 
 app.layout = html.Div(
     [
+        dcc.Graph(id="main-map", figure=get_initial_map()),
         html.Div(
-            [html.Label("Genus"), dcc.Dropdown(id="genus-dropdown", options=df.columns)]
+            [
+                html.Div(
+                    [
+                        html.Label("Genus"),
+                        dcc.Dropdown(id="genus-dropdown", options=df.columns),
+                    ]
+                ),
+                dcc.Slider(0, 1, 0.1, value=0, id="threshold-slider"),
+            ],
+            id="controls",
+            className="controls",
         ),
-        dcc.Graph(id="main-map"),
-        dcc.Slider(0, 1, 0.1, value=0, id="threshold-slider"),
-    ]
+    ],
+    id="container",
+    className="container",
 )
 
 
