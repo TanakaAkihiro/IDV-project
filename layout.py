@@ -25,8 +25,18 @@ def get_layout():
                             dcc.Slider(0, 1, 0.1, value=0, id="threshold-slider"),
                         ],
                         className="threshold-slider",
-                    )
-                    
+                    ),
+                    html.Div(
+                        [
+                            html.Label("Show true occurrences"),
+                            dcc.RadioItems(
+                                ["Yes", "No"],
+                                "Yes",
+                                id="show-tru-occ-radio",
+                                inline=True,
+                            ),
+                        ]
+                    ),
                 ],
                 id="controls",
                 className="controls",

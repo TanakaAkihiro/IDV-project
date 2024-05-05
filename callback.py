@@ -8,14 +8,14 @@ df = pd.read_csv("data/ALLEurasia_modified.csv")
 pred_df = pd.read_csv("data/ALLEurasia_MF.csv")
 
 
-
 def register_callbacks():
     @callback(
         Output("main-map", "figure"),
         Input("genus-dropdown", "value"),
         Input("threshold-slider", "value"),
+        Input("show-tru-occ-radio", "value"),
     )
-    def update_map(genus, threshold):
+    def update_map(genus, threshold, show_occ):
         if genus is None:
             raise PreventUpdate
         cols = [genus, "LAT", "LONG", "SITE_NAME", "COUNTRY", "MIN_AGE", "MAX_AGE"]
@@ -37,21 +37,22 @@ def register_callbacks():
                 hover_name="SITE_NAME",
                 color=genus,
             )
-            .update_traces(marker={"symbol": "circle"})
+            .update_traces(marker={"size": 7, "symbol": "circle"})
             .data[0]
         )
 
-        fig.add_trace(
-            px.scatter_geo(
-                dff,
-                lon="LONG",
-                lat="LAT",
-                hover_data=["COUNTRY", "MIN_AGE", "MAX_AGE", genus],
-                hover_name="SITE_NAME",
+        if show_occ == "Yes":
+            fig.add_trace(
+                px.scatter_geo(
+                    dff,
+                    lon="LONG",
+                    lat="LAT",
+                    hover_data=["COUNTRY", "MIN_AGE", "MAX_AGE", genus],
+                    hover_name="SITE_NAME",
+                )
+                .update_traces(marker=dict(size=7, symbol="cross", color="black"))
+                .data[0]
             )
-            .update_traces(marker=dict(symbol="cross", color="black"))
-            .data[0]
-        )
 
         fig.update_layout(
             margin=dict(l=0, r=0, b=0, t=0),
