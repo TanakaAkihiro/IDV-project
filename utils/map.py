@@ -13,15 +13,17 @@ COLORS = [
 ]
 
 
-
 def get_initial_map():
-    fig = px.scatter_geo()
+    fig = px.scatter_mapbox({}, [], [])
     fig.update_layout(
         margin=dict(l=0, r=0, b=0, t=0),
         autosize=True,
         height=800,
+        mapbox_style="open-street-map",
+        mapbox_zoom=1.7,
     )
     return fig
+
 
 def add_convex_hull_to_figure(fig, dff, age_spans):
     geometry = [Point(lon, lat) for lon, lat in zip(dff["LONG"], dff["LAT"])]
@@ -49,7 +51,7 @@ def add_convex_hull_to_figure(fig, dff, age_spans):
 
         convex_hull = gdf.unary_union.convex_hull
 
-        fig.add_scattergeo(
+        fig.add_scattermapbox(
             lat=list(convex_hull.exterior.xy[1]),
             lon=list(convex_hull.exterior.xy[0]),
             fill="toself",

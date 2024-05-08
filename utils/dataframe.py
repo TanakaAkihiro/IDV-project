@@ -1,11 +1,13 @@
 import geopandas as gpd
 from shapely.geometry import Point
 
+
 def create_gdf(df):
     geometry = [Point(lon, lat) for lon, lat in zip(df["LONG"], df["LAT"])]
     df["geometry"] = geometry
     gdf = gpd.GeoDataFrame(df)
     return gdf
+
 
 def preprocess_data(df, genus):
     gdf = create_gdf(df)

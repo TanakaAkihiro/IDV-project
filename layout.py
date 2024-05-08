@@ -7,6 +7,7 @@ df = pd.read_csv("data/ALLEurasia_modified.csv")
 
 AGE_SPANS = ["0-0.1", "0.1-0.6", "0.6-1.1", "1.1-1.6", "1.6-2.1", "2.1-2.6"]
 
+
 def get_layout():
     return html.Div(
         [
@@ -43,13 +44,11 @@ def get_layout():
                         [
                             html.Label("Age spans"),
                             dcc.Dropdown(
-                                AGE_SPANS,
-                                id="age-spans-dropdown",
-                                multi=True
-                            )
+                                AGE_SPANS, id="age-spans-dropdown", multi=True
+                            ),
                         ],
                         className="age-spans-dropdown",
-                    )
+                    ),
                 ],
                 id="controls",
                 className="controls",
