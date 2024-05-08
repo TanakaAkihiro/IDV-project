@@ -3,6 +3,8 @@ from dash import callback, Output, Input
 from dash.exceptions import PreventUpdate
 import plotly.express as px
 import plotly.graph_objects as go
+from utils.map import add_convex_hull_to_figure
+from utils.dataframe import preprocess_data
 
 df = pd.read_csv("data/ALLEurasia_modified.csv")
 pred_df = pd.read_csv("data/ALLEurasia_MF.csv")
@@ -14,8 +16,9 @@ def register_callbacks():
         Input("genus-dropdown", "value"),
         Input("threshold-slider", "value"),
         Input("show-tru-occ-radio", "value"),
+        Input("age-spans-dropdown", "value"),
     )
-    def update_map(genus, threshold, show_occ):
+    def update_map(genus, threshold, show_occ, age_spans):
         if genus is None:
             raise PreventUpdate
         cols = [genus, "LAT", "LONG", "SITE_NAME", "COUNTRY", "MIN_AGE", "MAX_AGE"]
@@ -55,6 +58,9 @@ def register_callbacks():
                 )
                 .data[0]
             )
+            
+            if age_spans != [None] and age_spans != None:
+                add_convex_hull_to_figure(fig, dff=preprocess_data(dff, genus), age_spans=age_spans)
 
         fig.update_layout(
             margin=dict(l=0, r=0, b=0, t=0),
