@@ -1,6 +1,7 @@
 import geopandas as gpd
 from shapely.geometry import Point
 import plotly.express as px
+from mapbox_token import mapbox_token
 
 
 COLORS = [
@@ -19,8 +20,9 @@ def get_initial_map():
         margin=dict(l=0, r=0, b=0, t=0),
         autosize=True,
         height=800,
-        mapbox_style="open-street-map",
+        mapbox_style="basic",
         mapbox_zoom=1.7,
+        mapbox=dict(accesstoken=mapbox_token)
     )
     return fig
 

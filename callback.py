@@ -5,6 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from utils.map import add_convex_hull_to_figure
 from utils.dataframe import preprocess_data
+from mapbox_token import mapbox_token
 
 df = pd.read_csv("data/ALLEurasia_modified.csv")
 pred_df = pd.read_csv("data/ALLEurasia_MF.csv")
@@ -56,9 +57,15 @@ def register_callbacks():
                     hover_name="SITE_NAME",
                 )
                 .update_traces(
-                    mode="markers", marker=dict(size=7, color="black", opacity=0.7)
+                    mode="markers", marker=dict(size=7, color="black", symbol="star")
                 )
                 .data[0]
+                #go.Scattermapbox(
+                #    mode = "markers",
+                #    lon=dff.LONG,
+                #    lat=dff.LAT,
+                #    marker=dict(size=7, color="black", symbol="hospital")
+                #)
             )
 
             if age_spans != [None] and age_spans != None:
@@ -70,12 +77,13 @@ def register_callbacks():
             margin=dict(l=0, r=0, b=0, t=0),
             autosize=True,
             height=800,
-            mapbox_style="open-street-map",
+            mapbox_style="basic",
             mapbox_center={
                 "lat": pred_gdff.geometry.y.mean(),
                 "lon": pred_gdff.geometry.x.mean(),
             },
             mapbox_zoom=1.7,
+            mapbox=dict(accesstoken=mapbox_token)
         )
 
         # fig.update_geos(projection_scale=1.5)
